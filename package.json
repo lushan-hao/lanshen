@@ -1,6 +1,6 @@
 {
   "name": "lanshen",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "自己封装的二次组件",
   "scripts": {
     "start": "dumi dev",
@@ -15,6 +15,7 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "files": ["dist", "README.md"],
   "typings": "dist/index.d.ts",
   "gitHooks": {
     "pre-commit": "lint-staged"
