@@ -1,10 +1,10 @@
-<!--
- * @LastEditors: haols
--->
-
 ## demo
 
 ```tsx
+/**
+ * title: 基本
+ * desc: 点击`TimePicker`然后可以在浮层中选择或者输入某一时间。
+ */
 import React, { useState } from 'react';
 import { DatePickerQuick } from 'lanshen';
 
@@ -30,3 +30,18 @@ export default () => {
   );
 };
 ```
+
+### API
+
+`<TimePicker />`n
+| 参数 | 说明 | 类型 | 默认值 |
+| :---- | :----: | :----: | :----: |
+| allowClear | 是否允许清空 | boolean | false |
+| value | 当前开始时间 | string | - |
+| valueEnd | 当前结束时间 | string | - |
+| dateType | 单选还是多选 | 1、2 | 1 |
+| noShowSelect | 是否展示后面的一天、多天 | boolean | false |
+| TypeChange | 单选多选切换 | (dateType: 1、 2) => void; | - |
+| size | 尺寸 | 'large'、'middle'、'small' | 'middle' |
+| format | 格式化 | string | 'YYYY-MM-DD' |
+| TimeChange | 时间发生变化的回调 | function(dateArr: [Moment, Moment], dateArrString: [string, string]) => void; | - |
