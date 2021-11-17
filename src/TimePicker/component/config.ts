@@ -1,6 +1,7 @@
 /*
  * @LastEditors: haols
  */
+import type { PropsminuteList60, PropsHourList24 } from './type';
 export const MinuteList60 = (props: PropsminuteList60) => {
   const { step = 1, hour } = props;
   if (hour === '24') {

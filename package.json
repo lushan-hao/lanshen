@@ -1,6 +1,6 @@
 {
   "name": "lanshen",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "自己封装的二次组件",
   "scripts": {
     "start": "dumi dev",
@@ -15,7 +15,10 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "typings": "dist/index.d.ts",
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -29,9 +32,14 @@
     ]
   },
   "dependencies": {
+    "@babel/runtime": "^7.16.3",
     "antd": "^4.16.13",
+    "classnames": "^2.3.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
-    "react": "^16.12.0 || ^17.0.0"
+    "react": "^16.12.0 || ^17.0.0",
+    "react-dom": "^17.0.2",
+    "react-is": "^17.0.2"
   },
   "devDependencies": {
     "@umijs/test": "^3.0.5",

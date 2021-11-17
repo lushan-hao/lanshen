@@ -10,6 +10,7 @@ import 'antd/dist/antd.css';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import './index.less';
 import { MinuteList60, HourList24 } from './config';
+import type { TimePickProps } from './type';
 
 const format = 'HH:mm';
 
