@@ -1,6 +1,7 @@
 {
   "name": "lanshen",
   "version": "1.0.0",
+  "description": "自己封装的二次组件",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -39,5 +40,7 @@
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
     "yorkie": "^2.0.0"
-  }
+  },
+  "author": "lanshen",
+  "license": "ISC"
 }
