@@ -5,33 +5,63 @@ You can use the [editor on GitHub](https://github.com/lushan-hao/lanshen/edit/gh
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 ### Markdown
+# lanshen
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Getting Started
 
-```markdown
-Syntax highlighted code block
+Install dependencies,
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+$ npm i lanshen
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+import
 
-### Jekyll Themes
+## demo
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/lushan-hao/lanshen/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```tsx
+/**
+ * title: 基本
+ * desc: 点击`TimePicker`然后可以在浮层中选择或者输入某一时间。
+ */
+import React, { useState } from 'react';
+import { DatePickerQuick } from 'lanshen';
 
-### Support or Contact
+export default () => {
+  const [value, setValue] = useState<string>('2021-11-10');
+  const [valueEnd, setValueEnd] = useState<string>('2021-11-10');
+  const [dateType, setDateType] = useState<1 | 2>(1);
+  return (
+    <DatePickerQuick
+      TimeChange={(_dateArr: any, dateArrString: [string, string]) => {
+        setValue(dateArrString[0]);
+        setValueEnd(dateArrString[1]);
+      }}
+      dateType={dateType}
+      TypeChange={(dateType: 1 | 2) => {
+        setDateType(dateType);
+      }}
+      pageType="1"
+      allowClear
+      value={value}
+      valueEnd={valueEnd}
+    />
+  );
+};
+```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### API
+
+`<TimePicker />`n
+| 参数 | 说明 | 类型 | 默认值 |
+| :---- | :----: | :----: | :----: |
+| allowClear | 是否允许清空 | boolean | false |
+| value | 当前开始时间 | string | - |
+| valueEnd | 当前结束时间 | string | - |
+| dateType | 单选还是多选 | 1、2 | 1 |
+| noShowSelect | 是否展示后面的一天、多天 | boolean | false |
+| TypeChange | 单选多选切换 | (dateType: 1、 2) => void; | - |
+| size | 尺寸 | 'large'、'middle'、'small' | 'middle' |
+| format | 格式化 | string | 'YYYY-MM-DD' |
+| TimeChange | 时间发生变化的回调 | function(dateArr: [Moment, Moment], dateArrString: [string, string]) => void; | - |
+
