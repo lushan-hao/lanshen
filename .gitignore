@@ -23,6 +23,6 @@
 # ide
 /.vscode
 /.idea
-/dist
+dist
 /es
 */npm

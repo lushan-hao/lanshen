@@ -36,7 +36,7 @@ export default () => {
   return (
     <TimePicker
       value={value}
-      onChange={(_time: Moment, timeString: string) => {
+      onChange={(timeString: string) => {
         setValue(timeString);
       }}
     />
@@ -53,7 +53,6 @@ export default () => {
  */
 import React, { useState } from 'react';
 import { TimePicker } from 'lanshen';
-import type { Moment } from 'moment';
 
 export default () => {
   const [value, setValue] = useState<string>('12:00');
@@ -61,7 +60,7 @@ export default () => {
     <TimePicker
       value={value}
       disabled
-      onChange={(_time: Moment, timeString: string) => {
+      onChange={(timeString: string) => {
         setValue(timeString);
       }}
     />
@@ -78,7 +77,6 @@ export default () => {
  */
 import React, { useState } from 'react';
 import { TimePicker } from 'lanshen';
-import type { Moment } from 'moment';
 
 export default () => {
   const [value, setValue] = useState<string>('12:00');
@@ -87,7 +85,7 @@ export default () => {
       value={value}
       hourStep={2}
       minuteStep={5}
-      onChange={(_time: Moment, timeString: string) => {
+      onChange={(timeString: string) => {
         setValue(timeString);
       }}
     />
@@ -104,7 +102,6 @@ export default () => {
  */
 import React, { useState } from 'react';
 import { TimePicker } from 'lanshen';
-import type { Moment } from 'moment';
 
 export default () => {
   const [value, setValue] = useState<string>('12:00');
@@ -120,7 +117,7 @@ export default () => {
         }
       }}
       minuteStep={15}
-      onChange={(_time: Moment, timeString: string) => {
+      onChange={(timeString: string) => {
         setValue(timeString);
       }}
     />
@@ -134,18 +131,22 @@ export default () => {
 | 参数 | 说明 | 类型 | 默认值 |
 | :---- | :----: | :----: | :----: |
 | className | 赋值给整个组件的 className | string | - |
-| value | 当前时间 | string | null |
+| value | 当前时间 | string | null | null |
 | width | 整个 TimePicker 的宽度 | number | 120 |
 | disabled | 禁用全部操作 | boolean | false |
-| disabledHours | 禁止选择部分小时选项 | function() | - |
-| disabledMinutes | 禁止选择部分分钟选项 | function(selectedHour: number) | - |
+| disabledHours | 禁止选择部分小时选项 | function(): void | - |
+| disabledMinutes | 禁止选择部分分钟选项 | function(selectedHour: number): void | - |
 | minuteStep | 分钟选项间隔 | number | 1 |
 | hourStep | 小时选项间隔 | number | 1 |
-| onChange | 时间发生变化的回调 | function(time: Moment, timeString: string): void | - |
+| onChange | 时间发生变化的回调 | function(timeString: string): void | - |
 
 ### FAQ
 
-fix: 1. antd 时间间隔如果是小数，展示出现问题
+#### 修复：
 
-问题： 1. disabledHours 是 string '01', '02' 暂定解决 2. 可以手动输入 数值符合才可以点击确定  
- 3. onChange 方法，返回两个参数，第一个是传进入的 disabledMinutesList 有问题 暂定解决 5. 选择完小时或者分 滑轮向上滑动 moment 类型，第二个 string 类型 暂定解决 4. disabledMinutes 返回的值有，但 6. 此时
+1. antd 时间间隔如果是小数，展示出现问题
+
+#### 后续更新计划：
+
+1. 增加秒选项(这个可能需要的时间更长一些)
+2. 时间复选多组件校验

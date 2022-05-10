@@ -11,10 +11,22 @@
 }
 .rc-trigger-popup {
   display: inline-block;
+  opacity: 1;
+  transition: all 1s;
 }
 .rc-trigger-popup-hidden {
   display: none;
+  // opacity: 0;
 }
+
+// .all-enter-active {
+//   opacity: 1;
+// }
+
+// .all-leave-active {
+//   opacity: 0;
+// }
+
 .TimePicker-dropdown {
   background-color: #fff;
   border: 1px solid #eee;
@@ -58,5 +70,54 @@
     border-radius: 3px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #bdbdbd;
+  }
+}
+
+.rc-trigger-popup-zoom-enter,
+.rc-trigger-popup-zoom-appear {
+  opacity: 0;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  animation-play-state: paused;
+}
+.rc-trigger-popup-zoom-leave {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.6, -0.3, 0.74, 0.05);
+  animation-play-state: paused;
+}
+.rc-trigger-popup-zoom-enter.rc-trigger-popup-zoom-enter-active,
+.rc-trigger-popup-zoom-appear.rc-trigger-popup-zoom-appear-active {
+  animation-name: rcTriggerZoomIn;
+  animation-play-state: running;
+}
+.rc-trigger-popup-zoom-leave.rc-trigger-popup-zoom-leave-active {
+  animation-name: rcTriggerZoomOut;
+  animation-play-state: running;
+}
+
+@keyframes rcTriggerZoomIn {
+  0% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(1, 0);
+  }
+  100% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
+  }
+}
+@keyframes rcTriggerZoomOut {
+  0% {
+    opacity: 1;
+    transform-origin: 50% 50%;
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform-origin: 50% 50%;
+    transform: scale(1, 0);
   }
 }

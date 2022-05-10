@@ -1,6 +1,6 @@
 import React from 'react';
-import 'antd/dist/antd.css';
 import type { Moment } from 'moment';
+import 'moment/locale/zh-cn';
 export declare type DatePickerOnChangeType = (
   dateArr: [Moment, Moment],
   dateArrString: [string, string],
@@ -16,6 +16,7 @@ declare type Props = {
   noShowSelect?: boolean;
   dateType?: 1 | 2;
   TypeChange?: (dateType: 1 | 2) => void;
+  showText?: boolean;
 };
 declare const _default: React.NamedExoticComponent<Props>;
 export default _default;

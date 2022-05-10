@@ -2,10 +2,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var React = require('react');
 require('antd/dist/antd.css');
+var React = require('react');
 var antd = require('antd');
 var moment = require('moment');
+require('moment/locale/zh-cn');
+var locale = require('antd/es/date-picker/locale/zh_CN');
 var _objectSpread = require('@babel/runtime/helpers/esm/objectSpread2');
 var _extends = require('@babel/runtime/helpers/esm/extends');
 var _classCallCheck = require('@babel/runtime/helpers/esm/classCallCheck');
@@ -30,6 +32,7 @@ function _interopDefaultLegacy(e) {
 
 var React__default = /*#__PURE__*/ _interopDefaultLegacy(React);
 var moment__default = /*#__PURE__*/ _interopDefaultLegacy(moment);
+var locale__default = /*#__PURE__*/ _interopDefaultLegacy(locale);
 var _objectSpread__default = /*#__PURE__*/ _interopDefaultLegacy(_objectSpread);
 var _extends__default = /*#__PURE__*/ _interopDefaultLegacy(_extends);
 var _classCallCheck__default =
@@ -55,6 +58,38 @@ var _regeneratorRuntime__default =
   /*#__PURE__*/ _interopDefaultLegacy(_regeneratorRuntime);
 var _asyncToGenerator__default =
   /*#__PURE__*/ _interopDefaultLegacy(_asyncToGenerator);
+
+function styleInject(css, ref) {
+  if (ref === void 0) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') {
+    return;
+  }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+var css_248z = "@import 'assets/iconfont/iconfont.css';\n";
+styleInject(css_248z);
 
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
@@ -220,42 +255,18 @@ function _nonIterableRest() {
   );
 }
 
-function styleInject(css, ref) {
-  if (ref === void 0) ref = {};
-  var insertAt = ref.insertAt;
+var css_248z$1 =
+  '/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */\n/* stylelint-disable no-duplicate-selectors */\n/* stylelint-disable */\n/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */\n.DatePickerQuick {\n  display: inline-block;\n  align-items: center;\n  margin-right: 10px;\n}\n.DatePickerQuick > :global(.ant-btn) {\n  padding-right: 5px;\n  padding-left: 5px;\n}\n.DatePickerQuick > :global(.ant-btn) > :global(span) {\n  color: var(--primary-color-dark);\n}\n.SingleDatePicker {\n  display: inline-block;\n}\n.SingleDatePicker .leftButton,\n.SingleDatePicker .rightButton {\n  display: inline-block;\n  width: 30px;\n  height: 32px;\n  color: var(--neutral-color5);\n  line-height: 32px;\n  text-align: center;\n  vertical-align: bottom;\n  border: 1px solid var(--neutral-color3);\n  border-right-width: 0;\n}\n';
+styleInject(css_248z$1);
 
-  if (!css || typeof document === 'undefined') {
-    return;
-  }
-
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
-
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
-    }
-  } else {
-    head.appendChild(style);
-  }
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-}
-
-var css_248z =
-  '/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */\n/* stylelint-disable no-duplicate-selectors */\n/* stylelint-disable */\n/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */\n.DatePickerQuick {\n  display: inline-block;\n  align-items: center;\n  margin-right: 10px;\n}\n.SingleDatePicker {\n  display: inline-block;\n}\n.SingleDatePicker .leftButton {\n  display: inline-block;\n  width: 30px;\n  height: 32px;\n  line-height: 32px;\n  text-align: center;\n  vertical-align: bottom;\n  border: 1px solid #d9d9d9;\n  border-right-width: 0;\n  cursor: pointer;\n}\n.SingleDatePicker .rightButton {\n  display: inline-block;\n  width: 30px;\n  height: 32px;\n  line-height: 32px;\n  text-align: center;\n  vertical-align: bottom;\n  border: 1px solid #d9d9d9;\n  border-left-width: 0;\n  cursor: pointer;\n}\n';
-styleInject(css_248z);
-
-/*
- * @LastEditors: haols
- */
+var _excluded = [
+  'allowClear',
+  'value',
+  'format',
+  'onChange',
+  'showText',
+  'disabled',
+];
 
 var SingleDatePicker = function SingleDatePicker(props) {
   var _props$allowClear = props.allowClear,
@@ -267,7 +278,8 @@ var SingleDatePicker = function SingleDatePicker(props) {
     _props$showText = props.showText,
     showText = _props$showText === void 0 ? true : _props$showText,
     _props$disabled = props.disabled,
-    disabled = _props$disabled === void 0 ? false : _props$disabled; // onSingleChange
+    disabled = _props$disabled === void 0 ? false : _props$disabled,
+    rest = _objectWithoutProperties(props, _excluded); // onSingleChange
 
   return /*#__PURE__*/ React__default['default'].createElement(
     'div',
@@ -302,21 +314,28 @@ var SingleDatePicker = function SingleDatePicker(props) {
               );
         },
       },
-      '<',
+      '\uE667',
     ),
-    /*#__PURE__*/ React__default['default'].createElement(antd.DatePicker, {
-      allowClear: allowClear,
-      disabled: disabled,
-      value: moment__default['default'](value),
-      format: format,
-      onChange: function onChange(date, dateSting) {
-        if (date !== null) {
-          _onChange === null || _onChange === void 0
-            ? void 0
-            : _onChange(date, dateSting);
-        }
-      },
-    }),
+    /*#__PURE__*/ React__default['default'].createElement(
+      antd.DatePicker,
+      _objectSpread2(
+        _objectSpread2({}, rest),
+        {},
+        {
+          allowClear: allowClear,
+          disabled: disabled,
+          value: moment__default['default'](value),
+          format: format,
+          onChange: function onChange(date, dateSting) {
+            if (date !== null) {
+              _onChange === null || _onChange === void 0
+                ? void 0
+                : _onChange(date, dateSting);
+            }
+          },
+        },
+      ),
+    ),
     /*#__PURE__*/ React__default['default'].createElement(
       'span',
       {
@@ -339,12 +358,10 @@ var SingleDatePicker = function SingleDatePicker(props) {
               );
         },
       },
-      '>',
+      '\uE63C',
     ),
   );
 };
-
-// import { YM, YMD, YMDHms } from '@/utils/timeUtils';
 
 var RangePicker = antd.DatePicker.RangePicker;
 
@@ -360,10 +377,12 @@ var DatePickerQuick = function DatePickerQuick(props) {
     _props$pageType = props.pageType,
     pageType = _props$pageType === void 0 ? '' : _props$pageType,
     _props$noShowSelect = props.noShowSelect,
-    noShowSelect = _props$noShowSelect === void 0 ? false : _props$noShowSelect,
+    noShowSelect = _props$noShowSelect === void 0 ? true : _props$noShowSelect,
     _props$dateType = props.dateType,
     dateType = _props$dateType === void 0 ? 1 : _props$dateType,
-    TypeChange = props.TypeChange;
+    TypeChange = props.TypeChange,
+    _props$showText = props.showText,
+    showText = _props$showText === void 0 ? true : _props$showText;
 
   var _useState = React.useState(moment__default['default'](value)),
     _useState2 = _slicedToArray(_useState, 2),
@@ -378,7 +397,7 @@ var DatePickerQuick = function DatePickerQuick(props) {
   var _useState5 = React.useState(0),
     _useState6 = _slicedToArray(_useState5, 2),
     target = _useState6[0],
-    setTarget = _useState6[1]; // console.log(dateType, mergedValue.format(format), mergedValueEnd.format(format), '时间组件内部类型、开始时间和结束时间')
+    setTarget = _useState6[1];
 
   React.useEffect(
     function () {
@@ -518,7 +537,7 @@ var DatePickerQuick = function DatePickerQuick(props) {
   return /*#__PURE__*/ React__default['default'].createElement(
     'div',
     {
-      className: css_248z.DatePickerQuick,
+      className: css_248z$1.DatePickerQuick,
     },
     '\u65E5\u671F\u8303\u56F4\uFF1A',
     /*#__PURE__*/ React__default['default'].createElement(
@@ -550,10 +569,7 @@ var DatePickerQuick = function DatePickerQuick(props) {
 
           TypeChange === null || TypeChange === void 0
             ? void 0
-            : TypeChange(e.target.value); // if (e.target.value === 'multiple') { // 单日切换为多日,
-          //   setInnerValueEnd(mergedValue);
-          //   onChange?.(mergedValue, 'dateEnd');
-          // }
+            : TypeChange(e.target.value);
         },
       },
       /*#__PURE__*/ React__default['default'].createElement(
@@ -573,32 +589,45 @@ var DatePickerQuick = function DatePickerQuick(props) {
     ),
     dateType === 1 &&
       /*#__PURE__*/ React__default['default'].createElement(SingleDatePicker, {
+        locale: locale__default['default'],
         value: moment__default['default'](mergedValue),
         format: format,
-        onChange: function onChange(date, dateSting) {
+        allowClear: allowClear,
+        onChange: function onChange(date) {
           setInnerValue(date);
           setInnerValueEnd(date);
           setTarget(target + 1);
         },
       }),
     dateType === 2 &&
-      /*#__PURE__*/ React__default['default'].createElement(RangePicker, {
-        value: [
-          moment__default['default'](mergedValue),
-          moment__default['default'](mergedValueEnd),
-        ],
-        allowClear: allowClear,
-        format: format,
-        onOpenChange: function onOpenChange(open) {
-          if (!open) {
-            setTarget(target + 1);
-          }
-        },
-        onChange: function onChange(dateArr, dateArrString) {
-          setInnerValue(dateArr[0]);
-          setInnerValueEnd(dateArr[1]);
-        },
-      }),
+      /*#__PURE__*/ React__default['default'].createElement(
+        React__default['default'].Fragment,
+        null,
+        showText &&
+          /*#__PURE__*/ React__default['default'].createElement(
+            'span',
+            null,
+            '\u9009\u62E9\u65E5\u671F\uFF1A',
+          ),
+        /*#__PURE__*/ React__default['default'].createElement(RangePicker, {
+          locale: locale__default['default'],
+          value: [
+            moment__default['default'](mergedValue),
+            moment__default['default'](mergedValueEnd),
+          ],
+          allowClear: allowClear,
+          format: format,
+          onOpenChange: function onOpenChange(open) {
+            if (!open) {
+              setTarget(target + 1);
+            }
+          },
+          onChange: function onChange(dateArr) {
+            setInnerValue(dateArr[0]);
+            setInnerValueEnd(dateArr[1]);
+          },
+        }),
+      ),
     !noShowSelect && dateType === 2 && buttons,
   );
 };
@@ -4909,11 +4938,11 @@ var MobilePopupInner = /*#__PURE__*/ React.forwardRef(function (props, ref) {
 });
 MobilePopupInner.displayName = 'MobilePopupInner';
 
-var _excluded = ['visible', 'mobile'];
+var _excluded$1 = ['visible', 'mobile'];
 var Popup = /*#__PURE__*/ React.forwardRef(function (_ref, ref) {
   var visible = _ref.visible,
     mobile = _ref.mobile,
-    props = _objectWithoutProperties__default['default'](_ref, _excluded);
+    props = _objectWithoutProperties__default['default'](_ref, _excluded$1);
 
   var _useState = React.useState(visible),
     _useState2 = _slicedToArray__default['default'](_useState, 2),
@@ -6965,7 +6994,7 @@ var useInsertStyles = function useInsertStyles() {
   }, []);
 };
 
-var _excluded$1 = [
+var _excluded$2 = [
   'icon',
   'className',
   'onClick',
@@ -7001,7 +7030,7 @@ var IconBase = function IconBase(props) {
     secondaryColor = props.secondaryColor,
     restProps = _objectWithoutProperties__default['default'](
       props,
-      _excluded$1,
+      _excluded$2,
     );
 
   var colors = twoToneColorPalette;
@@ -7082,7 +7111,7 @@ function getTwoToneColor() {
   return [colors.primaryColor, colors.secondaryColor];
 }
 
-var _excluded$2 = [
+var _excluded$3 = [
   'className',
   'icon',
   'spin',
@@ -7106,7 +7135,7 @@ var Icon = /*#__PURE__*/ React.forwardRef(function (props, ref) {
     twoToneColor = props.twoToneColor,
     restProps = _objectWithoutProperties__default['default'](
       props,
-      _excluded$2,
+      _excluded$3,
     );
 
   var _React$useContext = React.useContext(IconContext),
@@ -7224,9 +7253,9 @@ var ClockCircleOutlined$2 = /*#__PURE__*/ React.forwardRef(
   ClockCircleOutlined$1,
 );
 
-var css_248z$1 =
-  '.TimePicker {\n  display: inline-block;\n  position: relative;\n}\n.TimePicker-icon {\n  position: absolute;\n  font-size: 16;\n  right: 10px;\n  top: calc(50% - 8px);\n  opacity: 0.4;\n}\n.rc-trigger-popup {\n  display: inline-block;\n}\n.rc-trigger-popup-hidden {\n  display: none;\n}\n.TimePicker-dropdown {\n  background-color: #fff;\n  border: 1px solid #eee;\n  position: absolute;\n  left: 50%;\n  width: 142px;\n  z-index: 2;\n}\n.TimePicker-dropdown ul {\n  display: inline-block;\n  height: 150px;\n  width: 70px;\n  overflow-y: auto;\n  padding: 0;\n  margin-bottom: 0;\n}\n.TimePicker-dropdown ul .disabledTime {\n  opacity: 0.3;\n  cursor: no-drop;\n}\n.TimePicker-dropdown ul li {\n  text-align: center;\n  padding: 0 15px;\n}\n.TimePicker-dropdown ul li:hover {\n  background-color: #ccc;\n}\n.TimePicker-dropdown .selectTime {\n  background-color: #e6f8ff;\n}\n.TimePicker-dropdown-footer {\n  display: flex;\n  justify-content: space-between;\n  padding: 5px;\n}\n.TimePicker-dropdown ::-webkit-scrollbar {\n  width: 6px;\n  background-color: #eee;\n}\n.TimePicker-dropdown ::-webkit-scrollbar-thumb {\n  border-radius: 3px;\n  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);\n  background-color: #bdbdbd;\n}\n';
-styleInject(css_248z$1);
+var css_248z$2 =
+  '.TimePicker {\n  display: inline-block;\n  position: relative;\n}\n.TimePicker-icon {\n  position: absolute;\n  font-size: 16;\n  right: 10px;\n  top: calc(50% - 8px);\n  opacity: 0.4;\n}\n.rc-trigger-popup {\n  display: inline-block;\n  opacity: 1;\n  transition: all 1s;\n}\n.rc-trigger-popup-hidden {\n  display: none;\n}\n.TimePicker-dropdown {\n  background-color: #fff;\n  border: 1px solid #eee;\n  position: absolute;\n  left: 50%;\n  width: 142px;\n  z-index: 2;\n}\n.TimePicker-dropdown ul {\n  display: inline-block;\n  height: 150px;\n  width: 70px;\n  overflow-y: auto;\n  padding: 0;\n  margin-bottom: 0;\n}\n.TimePicker-dropdown ul .disabledTime {\n  opacity: 0.3;\n  cursor: no-drop;\n}\n.TimePicker-dropdown ul li {\n  text-align: center;\n  padding: 0 15px;\n}\n.TimePicker-dropdown ul li:hover {\n  background-color: #ccc;\n}\n.TimePicker-dropdown .selectTime {\n  background-color: #e6f8ff;\n}\n.TimePicker-dropdown-footer {\n  display: flex;\n  justify-content: space-between;\n  padding: 5px;\n}\n.TimePicker-dropdown ::-webkit-scrollbar {\n  width: 6px;\n  background-color: #eee;\n}\n.TimePicker-dropdown ::-webkit-scrollbar-thumb {\n  border-radius: 3px;\n  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);\n  background-color: #bdbdbd;\n}\n.rc-trigger-popup-zoom-enter,\n.rc-trigger-popup-zoom-appear {\n  opacity: 0;\n  -webkit-animation-duration: 0.3s;\n          animation-duration: 0.3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  -webkit-animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);\n          animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-trigger-popup-zoom-leave {\n  -webkit-animation-duration: 0.3s;\n          animation-duration: 0.3s;\n  -webkit-animation-fill-mode: both;\n          animation-fill-mode: both;\n  -webkit-animation-timing-function: cubic-bezier(0.6, -0.3, 0.74, 0.05);\n          animation-timing-function: cubic-bezier(0.6, -0.3, 0.74, 0.05);\n  -webkit-animation-play-state: paused;\n          animation-play-state: paused;\n}\n.rc-trigger-popup-zoom-enter.rc-trigger-popup-zoom-enter-active,\n.rc-trigger-popup-zoom-appear.rc-trigger-popup-zoom-appear-active {\n  -webkit-animation-name: rcTriggerZoomIn;\n          animation-name: rcTriggerZoomIn;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n.rc-trigger-popup-zoom-leave.rc-trigger-popup-zoom-leave-active {\n  -webkit-animation-name: rcTriggerZoomOut;\n          animation-name: rcTriggerZoomOut;\n  -webkit-animation-play-state: running;\n          animation-play-state: running;\n}\n@-webkit-keyframes rcTriggerZoomIn {\n  0% {\n    opacity: 0;\n    transform-origin: 50% 50%;\n    transform: scale(1, 0);\n  }\n  100% {\n    opacity: 1;\n    transform-origin: 50% 50%;\n    transform: scale(1, 1);\n  }\n}\n@keyframes rcTriggerZoomIn {\n  0% {\n    opacity: 0;\n    transform-origin: 50% 50%;\n    transform: scale(1, 0);\n  }\n  100% {\n    opacity: 1;\n    transform-origin: 50% 50%;\n    transform: scale(1, 1);\n  }\n}\n@-webkit-keyframes rcTriggerZoomOut {\n  0% {\n    opacity: 1;\n    transform-origin: 50% 50%;\n    transform: scale(1, 1);\n  }\n  100% {\n    opacity: 0;\n    transform-origin: 50% 50%;\n    transform: scale(1, 0);\n  }\n}\n@keyframes rcTriggerZoomOut {\n  0% {\n    opacity: 1;\n    transform-origin: 50% 50%;\n    transform: scale(1, 1);\n  }\n  100% {\n    opacity: 0;\n    transform-origin: 50% 50%;\n    transform: scale(1, 0);\n  }\n}\n';
+styleInject(css_248z$2);
 
 var MinuteList60 = function MinuteList60(props) {
   var _props$step = props.step,
@@ -7265,27 +7294,103 @@ var HourList24 = function HourList24(props) {
 
   return hourList;
 };
+/**
+ * @description 获取数组中与目标数值最接近的数值
+ * @param {array} arr 需要查找的数组
+ * @param {number} num 目标数值，查找的是与这个数值最接近的
+ * @return {number} 返回查找到的最接近的数值
+ */
 
-var _excluded$3 = [
-  'width',
-  'value',
-  'onChange',
-  'disabled',
-  'minuteStep',
-  'hourStep',
-  'disabledHours',
-  'disabledMinutes',
-  'className',
-];
-var format = 'HH:mm';
+function findCloseNum(arr, num) {
+  var index = 0; // 保存最接近数值在数组中的索引
 
-var TimePicker = function TimePicker(props) {
-  var _props$width = props.width,
-    width = _props$width === void 0 ? 120 : _props$width,
-    _props$value = props.value,
-    value = _props$value === void 0 ? null : _props$value,
-    onChange = props.onChange,
-    _props$disabled = props.disabled,
+  var d_value = Number.MAX_VALUE; // 保存差值绝对值，默认为最大数值
+
+  for (var i = 0; i < arr.length; i++) {
+    var new_d_value = Math.abs(arr[i] - num); // 新差值
+
+    if (new_d_value <= d_value) {
+      // 如果新差值绝对值小于等于旧差值绝对值，保存新差值绝对值和索引
+      if (new_d_value === d_value && arr[i] < arr[index]) {
+        // 如果数组中两个数值跟目标数值差值一样，取大
+        continue;
+      }
+
+      index = i;
+      d_value = new_d_value;
+    }
+  }
+
+  return arr[index]; // 返回最接近的数值
+} // 此时的执行函数
+
+var LocalTime = function LocalTime(_ref) {
+  var List = _ref.List,
+    minuteStep = _ref.minuteStep,
+    MinuteList = _ref.MinuteList,
+    hourStep = _ref.hourStep,
+    hourList = _ref.hourList;
+  var TimeList = []; // 所以时刻列表
+
+  var allTimeList =
+    hourList === null || hourList === void 0
+      ? void 0
+      : hourList.reduce(function (acc, item) {
+          var _MinuteList$map;
+
+          var oneHourList =
+            (_MinuteList$map =
+              MinuteList === null || MinuteList === void 0
+                ? void 0
+                : MinuteList.map(function (p) {
+                    return Number(''.concat(item).concat(p));
+                  })) !== null && _MinuteList$map !== void 0
+              ? _MinuteList$map
+              : [];
+          return acc.concat(oneHourList);
+        }, []);
+  var findIndex = findCloseNum(
+    allTimeList,
+    Number(''.concat(List[0]).concat(List[1])),
+  );
+  var newString = '0000'.concat(findIndex); // 将少于四位的数字补齐
+
+  TimeList.push(newString.slice(-4, -2)); // 取后四位
+
+  TimeList.push(newString.slice(-2)); // 取后两位
+  // 这部分函数是当初做取最近值，但是验证有问题，先弃用
+  // const TimeList = List;
+  // if (minuteStep && MinuteList.findIndex((p) => p === TimeList[1]) < 0) {
+  //   // 将分钟数组和当前时间排序和数字化
+  //   const minNumberList = MinuteList.concat(TimeList[1])
+  //     .reduce((acc: number[], item: string) => {
+  //       return acc.concat([Number(item)]);
+  //     }, [])
+  //     .sort((a, b) => a - b);
+  //   const Index = minNumberList.findIndex((p) => p === Number(TimeList[1]));
+  //   // 将找到的值的前一个赋给，没有赋值后面的
+  //   TimeList[1] = String(
+  //     minNumberList?.[Index - 1] ?? minNumberList?.[Index + 1] ?? TimeList[1],
+  //   );
+  // }
+  // if (hourStep && hourList.findIndex((p) => p === TimeList[0]) < 0) {
+  //   const hourNumberList = hourList
+  //     .concat(TimeList[0])
+  //     .reduce((acc: number[], item: string) => {
+  //       return acc.concat([Number(item)]);
+  //     }, [])
+  //     .sort((a: number, b: number) => a - b);
+  //   const Index = hourNumberList.findIndex((p) => p === Number(TimeList[0]));
+  //   TimeList[0] = String(
+  //     hourNumberList?.[Index - 1] ?? hourNumberList?.[Index + 1],
+  //   );
+  // }
+
+  return TimeList;
+};
+
+var PopFunction = function PopFunction(props) {
+  var _props$disabled = props.disabled,
     disabled = _props$disabled === void 0 ? false : _props$disabled,
     _props$minuteStep = props.minuteStep,
     minuteStep = _props$minuteStep === void 0 ? 1 : _props$minuteStep,
@@ -7293,62 +7398,15 @@ var TimePicker = function TimePicker(props) {
     hourStep = _props$hourStep === void 0 ? 1 : _props$hourStep,
     disabledHours = props.disabledHours,
     disabledMinutes = props.disabledMinutes,
-    className = props.className,
-    rest = _objectWithoutProperties(props, _excluded$3);
-
-  var _useState = React.useState(null),
-    _useState2 = _slicedToArray(_useState, 2),
-    hourValue = _useState2[0],
-    setHourValue = _useState2[1];
-
-  var _useState3 = React.useState(null),
-    _useState4 = _slicedToArray(_useState3, 2),
-    minuteValue = _useState4[0],
-    setMinuteValue = _useState4[1];
-
-  var _useState5 = React.useState(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    isvisible = _useState6[0],
-    setIsvisible = _useState6[1]; // 向外部传递值
-
-  var ChangeData = function ChangeData() {
-    if (onChange !== undefined && hourValue !== null && minuteValue !== null) {
-      onChange(
-        moment__default['default'](
-          ''.concat(hourValue, ':').concat(minuteValue),
-          'HH:mm',
-        ),
-        ''.concat(hourValue, ':').concat(minuteValue),
-      );
-    }
-  }; // 设置内部的值
-
-  var AssignmentData = function AssignmentData(accValue) {
-    if (accValue !== null) {
-      var _moment, _moment2;
-
-      setHourValue(
-        (_moment = moment__default['default'](accValue, format)) === null ||
-          _moment === void 0
-          ? void 0
-          : _moment.format('HH'),
-      );
-      setMinuteValue(
-        (_moment2 = moment__default['default'](accValue, format)) === null ||
-          _moment2 === void 0
-          ? void 0
-          : _moment2.format('mm'),
-      );
-    }
-  };
-
-  React.useEffect(
-    function () {
-      // 传入数据进行处理
-      AssignmentData(value);
-    },
-    [value],
-  );
+    isvisible = props.isvisible,
+    hourValue = props.hourValue,
+    minuteValue = props.minuteValue,
+    setHourValue = props.setHourValue,
+    setIsvisible = props.setIsvisible,
+    onChange = props.onChange,
+    setMinuteValue = props.setMinuteValue,
+    AssignmentData = props.AssignmentData,
+    value = props.value;
   var MinuteList = React.useMemo(
     function () {
       // 分钟列表
@@ -7357,7 +7415,7 @@ var TimePicker = function TimePicker(props) {
         hour: hourValue,
       });
     },
-    [hourValue],
+    [hourValue, minuteStep],
   );
   var hourList = React.useMemo(
     function () {
@@ -7367,23 +7425,35 @@ var TimePicker = function TimePicker(props) {
       });
     },
     [hourStep],
-  );
+  ); // 不可选择的小时列表
+
   var disabledHoursList = React.useMemo(
     function () {
       if (!isvisible) {
         return [];
       }
 
+      var arr = [];
+
+      if (minuteValue === '00') {
+        arr = ['00'];
+      }
+
+      if (minuteValue && minuteValue !== '00') {
+        arr = ['24'];
+      }
+
       if (disabledHours && Array.isArray(disabledHours())) {
         return disabledHours().reduce(function (acc, item) {
           return acc.concat([''.concat(item > 10 ? '' : 0).concat(item)]);
-        }, []);
+        }, arr);
       }
 
-      return [];
+      return arr;
     },
-    [isvisible],
-  );
+    [isvisible, minuteValue],
+  ); // 不可选择的分钟列表
+
   var disabledMinutesList = React.useMemo(
     function () {
       if (!isvisible) {
@@ -7402,6 +7472,242 @@ var TimePicker = function TimePicker(props) {
       return [];
     },
     [isvisible, hourValue],
+  ); // 向外部传递值
+
+  var ChangeData = function ChangeData() {
+    AssignmentData(value);
+
+    if (onChange !== undefined && hourValue !== null && minuteValue !== null) {
+      onChange(''.concat(hourValue, ':').concat(minuteValue));
+    }
+  }; // 弹出组件
+
+  return /*#__PURE__*/ React__default['default'].createElement(
+    'div',
+    {
+      className: 'TimePicker-dropdown',
+    },
+    !disabled &&
+      /*#__PURE__*/ React__default['default'].createElement(
+        React.Fragment,
+        null,
+        /*#__PURE__*/ React__default['default'].createElement(
+          'ul',
+          null,
+          hourList.map(function (item) {
+            var currentClassName = '';
+
+            if (hourValue === item) {
+              currentClassName = 'selectTime';
+            }
+
+            if (
+              disabledHoursList.findIndex(function (p) {
+                return p === item;
+              }) > -1
+            ) {
+              currentClassName = 'disabledTime';
+            }
+
+            return /*#__PURE__*/ React__default['default'].createElement(
+              'li',
+              {
+                key: item,
+                className: currentClassName,
+                onClick: function onClick() {
+                  if (currentClassName === '') {
+                    setHourValue(item);
+                  }
+                },
+              },
+              /*#__PURE__*/ React__default['default'].createElement(
+                'div',
+                null,
+                item,
+              ),
+            );
+          }),
+        ),
+        /*#__PURE__*/ React__default['default'].createElement(
+          'ul',
+          null,
+          MinuteList.map(function (item) {
+            var currentClassName = '';
+
+            if (minuteValue === item) {
+              currentClassName = 'selectTime';
+            }
+
+            if (
+              disabledMinutesList.findIndex(function (p) {
+                return p === item;
+              }) > -1
+            ) {
+              currentClassName = 'disabledTime';
+            }
+
+            return /*#__PURE__*/ React__default['default'].createElement(
+              'li',
+              {
+                key: item,
+                className: currentClassName,
+                onClick: function onClick() {
+                  if (currentClassName === '') {
+                    setMinuteValue(item);
+                  }
+                },
+              },
+              /*#__PURE__*/ React__default['default'].createElement(
+                'div',
+                null,
+                item,
+              ),
+            );
+          }),
+        ),
+        /*#__PURE__*/ React__default['default'].createElement(
+          'div',
+          {
+            className: 'TimePicker-dropdown-footer',
+          },
+          /*#__PURE__*/ React__default['default'].createElement(
+            antd.Button,
+            {
+              type: 'link',
+              onClick: function onClick() {
+                var _ref;
+
+                var localTimeString =
+                  moment__default['default']().format('HH:mm') === '00:00'
+                    ? '24:00'
+                    : moment__default['default']().format('HH:mm');
+                var TimeList = localTimeString.split(':'); // 分钟步长选择
+
+                var newTimeList = LocalTime({
+                  List: TimeList,
+                  minuteStep: minuteStep,
+                  MinuteList:
+                    MinuteList === null || MinuteList === void 0
+                      ? void 0
+                      : MinuteList.filter(function (p) {
+                          return !disabledMinutesList.find(function (e) {
+                            return e === p;
+                          });
+                        }),
+                  hourStep: hourStep,
+                  hourList:
+                    hourList === null || hourList === void 0
+                      ? void 0
+                      : hourList.filter(function (p) {
+                          return !disabledHoursList.find(function (e) {
+                            return e === p;
+                          });
+                        }),
+                }); // console.log(TimeList, 'TimeList');
+
+                AssignmentData(
+                  (_ref = ''
+                    .concat(newTimeList[0], ':')
+                    .concat(newTimeList[1])) !== null && _ref !== void 0
+                    ? _ref
+                    : localTimeString,
+                );
+              },
+            },
+            '\u6B64\u65F6',
+          ),
+          /*#__PURE__*/ React__default['default'].createElement(
+            antd.Button,
+            {
+              type: 'primary',
+              onClick: function onClick() {
+                ChangeData();
+                setIsvisible(false);
+              },
+            },
+            '\u786E\u5B9A',
+          ),
+        ),
+      ),
+  );
+};
+
+var _excluded$4 = [
+  'width',
+  'value',
+  'disabled',
+  'className',
+  'defaultValue',
+  'onChange',
+  'mount',
+  'PopupRest',
+];
+var format = 'HH:mm';
+
+var TimePicker = function TimePicker(props) {
+  var _props$width = props.width,
+    width = _props$width === void 0 ? 140 : _props$width,
+    _props$value = props.value,
+    value = _props$value === void 0 ? null : _props$value,
+    _props$disabled = props.disabled,
+    disabled = _props$disabled === void 0 ? false : _props$disabled,
+    className = props.className,
+    defaultValue = props.defaultValue,
+    onChange = props.onChange,
+    mount = props.mount,
+    PopupRest = props.PopupRest,
+    rest = _objectWithoutProperties(props, _excluded$4);
+
+  var _useState = React.useState(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    hourValue = _useState2[0],
+    setHourValue = _useState2[1];
+
+  var _useState3 = React.useState(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    minuteValue = _useState4[0],
+    setMinuteValue = _useState4[1];
+
+  var _useState5 = React.useState(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    isvisible = _useState6[0],
+    setIsvisible = _useState6[1]; // 设置内部的值
+
+  var AssignmentData = function AssignmentData(accValue) {
+    if (accValue === '24:00') {
+      setHourValue('24');
+      setMinuteValue('00');
+      return;
+    }
+
+    if (accValue !== null) {
+      var _moment, _moment2;
+
+      setHourValue(
+        (_moment = moment__default['default'](accValue, format)) === null ||
+          _moment === void 0
+          ? void 0
+          : _moment.format('HH'),
+      );
+      setMinuteValue(
+        (_moment2 = moment__default['default'](accValue, format)) === null ||
+          _moment2 === void 0
+          ? void 0
+          : _moment2.format('mm'),
+      );
+      return;
+    }
+
+    setHourValue(null);
+    setMinuteValue(null);
+  };
+
+  React.useEffect(
+    function () {
+      // 传入数据进行处理
+      AssignmentData(defaultValue || value);
+    },
+    [value, defaultValue],
   ); // console.log(
   //   '外面传进来的值：',
   //   value,
@@ -7411,152 +7717,66 @@ var TimePicker = function TimePicker(props) {
   //   disabledMinutesList,
   // );
 
-  var PopFunction = function PopFunction() {
-    // 弹出组件
-    return /*#__PURE__*/ React__default['default'].createElement(
-      'div',
-      {
-        className: 'TimePicker-dropdown',
-      },
-      !disabled &&
-        /*#__PURE__*/ React__default['default'].createElement(
-          React.Fragment,
-          null,
-          /*#__PURE__*/ React__default['default'].createElement(
-            'ul',
-            null,
-            hourList.map(function (item) {
-              var currentClassName = '';
-
-              if (hourValue === item) {
-                currentClassName = 'selectTime';
-              }
-
-              if (
-                disabledHoursList.findIndex(function (p) {
-                  return p === item;
-                }) > -1
-              ) {
-                currentClassName = 'disabledTime';
-              }
-
-              return /*#__PURE__*/ React__default['default'].createElement(
-                'li',
-                {
-                  key: item,
-                  className: currentClassName,
-                  onClick: function onClick() {
-                    if (currentClassName === '') {
-                      setHourValue(item); // if (disabledMinutes) {
-                      //   disabledMinutes(Number(item));
-                      // }
-                    }
-                  },
-                },
-                /*#__PURE__*/ React__default['default'].createElement(
-                  'div',
-                  null,
-                  item,
-                ),
-              );
-            }),
-          ),
-          /*#__PURE__*/ React__default['default'].createElement(
-            'ul',
-            null,
-            MinuteList.map(function (item) {
-              var currentClassName = '';
-
-              if (minuteValue === item) {
-                currentClassName = 'selectTime';
-              }
-
-              if (
-                disabledMinutesList.findIndex(function (p) {
-                  return p === item;
-                }) > -1
-              ) {
-                currentClassName = 'disabledTime';
-              }
-
-              return /*#__PURE__*/ React__default['default'].createElement(
-                'li',
-                {
-                  key: item,
-                  className: currentClassName,
-                  onClick: function onClick() {
-                    if (currentClassName === '') {
-                      setMinuteValue(item);
-                    }
-                  },
-                },
-                /*#__PURE__*/ React__default['default'].createElement(
-                  'div',
-                  null,
-                  item,
-                ),
-              );
-            }),
-          ),
-          /*#__PURE__*/ React__default['default'].createElement(
-            'div',
-            {
-              className: 'TimePicker-dropdown-footer',
-            },
-            /*#__PURE__*/ React__default['default'].createElement(
-              antd.Button,
-              {
-                type: 'link',
-                onClick: function onClick() {
-                  console.log('此时');
-                },
-              },
-              '\u6B64\u65F6',
-            ),
-            /*#__PURE__*/ React__default['default'].createElement(
-              antd.Button,
-              {
-                type: 'primary',
-                onClick: function onClick() {
-                  ChangeData();
-                  setIsvisible(false);
-                },
-              },
-              '\u786E\u5B9A',
-            ),
-          ),
-        ),
-    );
-  };
-
   return /*#__PURE__*/ React__default['default'].createElement(
     'div',
     {
-      className: className,
+      className: ''.concat(className, ' TimePicker'),
       style: {
         display: 'inline-block',
       },
     },
     /*#__PURE__*/ React__default['default'].createElement(
       Trigger,
-      {
-        action: ['click'],
-        popupPlacement: 'bottom',
-        popup: /*#__PURE__*/ React__default['default'].createElement(
-          PopFunction,
-          null,
-        ),
-        popupAlign: {
-          points: ['tl', 'bl'],
-          offset: [0, 3],
+      _objectSpread2(
+        {
+          action: ['click'],
+          popup: /*#__PURE__*/ React__default['default'].createElement(
+            PopFunction,
+            _objectSpread2(
+              _objectSpread2({}, props),
+              {},
+              {
+                hourValue: hourValue,
+                isvisible: isvisible,
+                minuteValue: minuteValue,
+                setHourValue: setHourValue,
+                setIsvisible: setIsvisible,
+                onChange: onChange,
+                setMinuteValue: setMinuteValue,
+                AssignmentData: AssignmentData,
+                value: value,
+              },
+            ),
+          ),
+          popupAlign: {
+            points: ['tl', 'bl'],
+            offset: [0, 3],
+            overflow: {
+              adjustX: 1,
+              adjustY: 1,
+            },
+          },
+          getPopupContainer: function getPopupContainer(e) {
+            return mount !== null && mount !== void 0 ? mount : e;
+          },
+          popupVisible: isvisible,
+          popupMotion: {
+            motionName: 'rc-trigger-popup-zoom',
+          },
+          onPopupVisibleChange: function onPopupVisibleChange(visible) {
+            if (disabled) {
+              return;
+            }
+
+            if (!visible) {
+              AssignmentData(value);
+            }
+
+            setIsvisible(visible);
+          },
         },
-        maskClosable: true,
-        popupVisible: isvisible,
-        onPopupVisibleChange: function onPopupVisibleChange(visible) {
-          !disabled && setIsvisible(visible);
-          AssignmentData(value);
-        },
-      },
+        PopupRest,
+      ),
       /*#__PURE__*/ React__default['default'].createElement(
         'div',
         {
@@ -7594,4 +7814,5 @@ var TimePicker = function TimePicker(props) {
 };
 
 exports.DatePickerQuick = index;
+exports.SingleDatePicker = SingleDatePicker;
 exports.TimePicker = TimePicker;
