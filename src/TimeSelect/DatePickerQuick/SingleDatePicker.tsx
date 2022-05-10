@@ -14,6 +14,7 @@ interface Props {
   onChange?: (date: Moment, dateSting: string) => void; // 用于form表单中传函数
   showText?: boolean;
   disabled?: boolean;
+  locale?: any;
 }
 
 const SingleDatePicker: React.FC<Props> = (props) => {

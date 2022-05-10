@@ -194,7 +194,7 @@ const DatePickerQuick: React.FC<Props> = (props) => {
                 setTarget(target + 1);
               }
             }}
-            onChange={(dateArr: [Moment, Moment]) => {
+            onChange={(dateArr: any) => {
               setInnerValue(dateArr[0]);
               setInnerValueEnd(dateArr[1]);
             }}
