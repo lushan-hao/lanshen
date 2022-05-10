@@ -11,7 +11,6 @@ interface Props {
   allowClear?: boolean;
   value?: Moment;
   format?: string;
-  // eslint-disable-next-line no-unused-vars
   onChange?: (date: Moment, dateSting: string) => void; // 用于form表单中传函数
   showText?: boolean;
   disabled?: boolean;
@@ -25,6 +24,7 @@ const SingleDatePicker: React.FC<Props> = (props) => {
     onChange,
     showText = true,
     disabled = false,
+    ...rest
   } = props; // onSingleChange
   return (
     <div className="SingleDatePicker">
@@ -44,9 +44,10 @@ const SingleDatePicker: React.FC<Props> = (props) => {
           );
         }}
       >
-        &lt;
+        &#xe667;
       </span>
       <DatePicker
+        {...rest}
         allowClear={allowClear}
         disabled={disabled}
         value={moment(value)}
@@ -72,7 +73,7 @@ const SingleDatePicker: React.FC<Props> = (props) => {
           );
         }}
       >
-        &gt;
+        &#xe63c;
       </span>
     </div>
   );

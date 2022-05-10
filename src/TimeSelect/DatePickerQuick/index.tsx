@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { memo, useState, useEffect, useMemo, useCallback } from 'react';
-import 'antd/dist/antd.css';
 import styles from './index.less';
 import { Button, Radio, DatePicker } from 'antd';
 import SingleDatePicker from './SingleDatePicker';
 import moment from 'moment';
 import type { Moment } from 'moment';
-// import DatePicker from '@/components/DatePicker';
-// import { YM, YMD, YMDHms } from '@/utils/timeUtils';
+import 'moment/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
 
 const { RangePicker } = DatePicker;
 
@@ -28,8 +27,7 @@ type Props = {
   noShowSelect?: boolean;
   dateType?: 1 | 2;
   TypeChange?: (dateType: 1 | 2) => void;
-  // picker?: 'date' | 'month';
-  // showTime?: boolean;
+  showText?: boolean;
 };
 
 const DatePickerQuick: React.FC<Props> = (props) => {
@@ -41,17 +39,15 @@ const DatePickerQuick: React.FC<Props> = (props) => {
     format = 'YYYY-MM-DD',
     allowClear = false,
     pageType = '',
-    noShowSelect = false,
+    noShowSelect = true,
     dateType = 1,
     TypeChange,
-    // picker,
-    // showTime,
+    showText = true,
   } = props;
 
   const [mergedValue, setInnerValue] = useState(moment(value));
   const [mergedValueEnd, setInnerValueEnd] = useState(moment(valueEnd));
   const [target, setTarget] = useState(0);
-  // console.log(dateType, mergedValue.format(format), mergedValueEnd.format(format), '时间组件内部类型、开始时间和结束时间')
 
   useEffect(() => {
     setInnerValue(moment(value));
@@ -167,10 +163,6 @@ const DatePickerQuick: React.FC<Props> = (props) => {
             );
           }
           TypeChange?.(e.target.value);
-          // if (e.target.value === 'multiple') { // 单日切换为多日,
-          //   setInnerValueEnd(mergedValue);
-          //   onChange?.(mergedValue, 'dateEnd');
-          // }
         }}
       >
         <Radio value={1}>单日</Radio>
@@ -178,9 +170,11 @@ const DatePickerQuick: React.FC<Props> = (props) => {
       </Radio.Group>
       {dateType === 1 && (
         <SingleDatePicker
+          locale={locale}
           value={moment(mergedValue)}
           format={format}
-          onChange={(date: Moment, dateSting: string) => {
+          allowClear={allowClear}
+          onChange={(date: Moment) => {
             setInnerValue(date);
             setInnerValueEnd(date);
             setTarget(target + 1);
@@ -188,20 +182,24 @@ const DatePickerQuick: React.FC<Props> = (props) => {
         />
       )}
       {dateType === 2 && (
-        <RangePicker
-          value={[moment(mergedValue), moment(mergedValueEnd)]}
-          allowClear={allowClear}
-          format={format}
-          onOpenChange={(open: boolean) => {
-            if (!open) {
-              setTarget(target + 1);
-            }
-          }}
-          onChange={(dateArr: any, dateArrString: [string, string]) => {
-            setInnerValue(dateArr[0]);
-            setInnerValueEnd(dateArr[1]);
-          }}
-        />
+        <>
+          {showText && <span>选择日期：</span>}
+          <RangePicker
+            locale={locale}
+            value={[moment(mergedValue), moment(mergedValueEnd)]}
+            allowClear={allowClear}
+            format={format}
+            onOpenChange={(open: boolean) => {
+              if (!open) {
+                setTarget(target + 1);
+              }
+            }}
+            onChange={(dateArr: [Moment, Moment]) => {
+              setInnerValue(dateArr[0]);
+              setInnerValueEnd(dateArr[1]);
+            }}
+          />
+        </>
       )}
       {!noShowSelect && dateType === 2 && buttons}
     </div>
