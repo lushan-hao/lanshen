@@ -93,9 +93,9 @@ const TimePicker = (props: TimePickProps) => {
             adjustY: 1,
           },
         }}
-        getPopupContainer={(e) => {
-          return (mount ?? e) as any;
-        }}
+        // getPopupContainer={(e) => {
+        //   return (mount ?? e) as any;
+        // }}
         popupVisible={isvisible}
         popupMotion={{
           motionName: 'rc-trigger-popup-zoom',

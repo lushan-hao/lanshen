@@ -10,21 +10,6 @@
 ```tsx
 /**
  * title: 基本
- * desc: 点击`TimePicker`然后可以在浮层中选择或者输入某一时间。
- */
-import React from 'react';
-import { TimePicker } from 'lanshen';
-
-export default () => {
-  return <TimePicker />;
-};
-```
-
-### 受控组件
-
-```tsx
-/**
- * title: 受控组件
  * desc: 其中`value` 和 `onChange` 需要配合使用。
  */
 import React, { useState } from 'react';
@@ -150,3 +135,4 @@ export default () => {
 
 1. 增加秒选项(这个可能需要的时间更长一些)
 2. 时间复选多组件校验
+3. 点击时间后列表滚动到相应位置
