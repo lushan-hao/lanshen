@@ -1,6 +1,6 @@
 {
   "name": "lanshen",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "自己封装的二次组件",
   "scripts": {
     "start": "dumi dev",
@@ -50,7 +50,10 @@
     "prettier": "^2.2.1",
     "yorkie": "^2.0.0"
   },
-  "author": { "name": "sunny", "url" : "http://www.haols.top/" },
+  "author": {
+    "name": "sunny",
+    "url": "http://www.haols.top/"
+  },
   "homepage": "http://www.haols.top:9000",
   "repository": "https://github.com/lushan-hao/lanshen",
   "license": "ISC"
