@@ -1,6 +1,6 @@
 {
   "name": "lanshen",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "自己封装的二次组件",
   "scripts": {
     "start": "dumi dev",
